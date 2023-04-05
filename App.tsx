@@ -1,17 +1,27 @@
+import './i18n';
 import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {SelectLanguage} from "./src/components/SelectLanguage/SelectLanguage";
+import {useEffect, useState} from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const App = () => {
+export default function App() {
+    const [initializeLanguage, setInitializeLanguage] = useState<string | null>(null)
+
+    useEffect(() => {
+        AsyncStorage.getItem('i18Lang').then(res => {
+            setInitializeLanguage(res)
+        })
+    }, [])
+
     return (
         <View style={styles.container}>
-            <SelectLanguage/>
             <StatusBar style="auto"/>
+            {initializeLanguage ? <Text>Done</Text> : <SelectLanguage/>}
         </View>
     );
 }
 
-export default App
 
 const styles = StyleSheet.create({
     container: {

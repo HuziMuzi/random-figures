@@ -14,7 +14,6 @@ export const AppButton = ({title, onPress}: AppButtonPropsType) => {
     );
 };
 
-
 const styles = StyleSheet.create({
     container: {
         width: '100%',
