@@ -2,7 +2,8 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {LoginScreen} from './LoginScreen/LoginScreen';
 import {StyleSheet} from 'react-native';
-import {Colors} from '@src/theme/Colors';
+import {Colors} from '../../theme/Colors';
+import {HomeScreen} from './HomeScreen/HomeScreen';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -13,7 +14,8 @@ export const Main = () => {
         headerStyle: styles.headerStyle,
         headerTitleStyle: styles.headerTitleStyle,
       }}>
-      <Screen name="Login" component={LoginScreen} />
+      <Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
+      <Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
     </Navigator>
   );
 };

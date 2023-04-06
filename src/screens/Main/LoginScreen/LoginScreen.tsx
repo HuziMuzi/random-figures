@@ -1,28 +1,31 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {AppButton} from '@src/components/AppButton/AppButton';
-import SingInForm from './SingInFrom/SingInForm';
+import {StyleSheet, View} from 'react-native';
+import {SingInForm} from './SingInFrom/SingInForm';
 import {SingUpForm} from './SingUpFrom/SingInForm';
-import {ScreenLayout} from '@src/components/layout/ScreenLayout';
-import {Colors} from '@src/theme/Colors';
+
+import {ScreenLayout} from '../../../layout/ScreenLayout';
+
+export type FormType = {
+  username: string;
+  password: string;
+};
 
 export const LoginScreen = () => {
   const [isLoginForm, setIsLoginForm] = useState(false);
+  const [iaFetching, setIsFetching] = useState(false);
 
-  const handlerChangeFormatForm = () => {
+  const handlerChangeForm = () => {
     setIsLoginForm(!isLoginForm);
   };
 
   return (
-    <ScreenLayout>
+    <ScreenLayout isFetching={iaFetching}>
       <View style={styles.container}>
-        {isLoginForm ? <SingInForm /> : <SingUpForm />}
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity onPress={handlerChangeFormatForm} style={styles.button}>
-            <Text style={styles.textButton}>{isLoginForm ? 'Sing Up' : 'Sing In'}</Text>
-          </TouchableOpacity>
-          <AppButton title={isLoginForm ? 'Sing In' : 'Sing Up'} onPress={() => {}} />
-        </View>
+        {isLoginForm ? (
+          <SingUpForm onPressChangeForm={handlerChangeForm} setIsFetching={setIsFetching} />
+        ) : (
+          <SingInForm onPressChangeForm={handlerChangeForm} setIsFetching={setIsFetching} />
+        )}
       </View>
     </ScreenLayout>
   );
@@ -33,16 +36,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  buttonsContainer: {
-    width: 110,
-    alignItems: 'center',
-  },
-  button: {
-    marginBottom: 10,
-  },
-  textButton: {
-    fontSize: 20,
-    color: Colors.Yellow,
   },
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {Colors} from '@src/theme/Colors';
+import {Colors} from '../../theme/Colors';
 
 type TitlePropsType = {
   text: string;
