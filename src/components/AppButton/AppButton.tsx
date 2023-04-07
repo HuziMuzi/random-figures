@@ -17,7 +17,6 @@ export const AppButton = ({title, onPress}: AppButtonPropsType) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     height: 35,
     alignItems: 'center',
     justifyContent: 'center',

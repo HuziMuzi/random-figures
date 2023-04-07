@@ -6,15 +6,20 @@ import {Title} from '../../../../components/Title/Title';
 import {CustomInputWithLabel} from '../../../../components/CustomInputWithLabel/CustomInputWithLabel';
 import {AppButton} from '../../../../components/AppButton/AppButton';
 import {Colors} from '../../../../theme/Colors';
-import {authAPI} from '../../../../dal/authAPI';
 import {useAppNavigate} from '../../../../hooks/hooks';
+import {login} from '../services/services';
 
 type SingInFormPropsType = {
-  onPressChangeForm: () => void;
+  setIsAuth: (value: boolean) => void;
   setIsFetching: (value: boolean) => void;
+  onPressChangeForm: () => void;
 };
 
-export const SingInForm = ({onPressChangeForm, setIsFetching}: SingInFormPropsType) => {
+export const SingInForm = ({
+  setIsAuth,
+  setIsFetching,
+  onPressChangeForm,
+}: SingInFormPropsType) => {
   const {
     control,
     handleSubmit,
@@ -25,21 +30,16 @@ export const SingInForm = ({onPressChangeForm, setIsFetching}: SingInFormPropsTy
   const {navigate} = useAppNavigate();
 
   const handlerFormSubmit = async (user: FormType) => {
-    try {
-      setIsFetching(true);
-      await authAPI.login(user);
+    const response = await login({user, setError, setIsAuth, setIsFetching});
+    if (response!) {
       reset();
       navigate('Home');
-    } catch (e) {
-      setError('root', {type: 'custom', message: e as string});
-    } finally {
-      setIsFetching(false);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Title text="Log in to your account" />
+      <Title>Log in to your account</Title>
       <CustomInputWithLabel
         label="Username"
         control={control}

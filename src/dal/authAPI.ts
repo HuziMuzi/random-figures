@@ -3,13 +3,13 @@ import {FormType} from '../screens/Main/LoginScreen/LoginScreen';
 
 export const authAPI = {
   register(newUser: FormType) {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       setTimeout(async () => {
         const listUsers = JSON.parse((await AsyncStorage.getItem('users')) as string);
 
         if (!listUsers) {
           await AsyncStorage.setItem('users', JSON.stringify([newUser]));
-          return resolve;
+          return resolve(newUser.username);
         }
 
         const checkUser = listUsers.filter((el: FormType) => el.username === newUser.username);
@@ -18,12 +18,12 @@ export const authAPI = {
         } else {
           await AsyncStorage.setItem('users', JSON.stringify([...listUsers, newUser]));
         }
-        return resolve();
+        return resolve(newUser.username);
       }, 1000);
     });
   },
   login(user: FormType) {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       setTimeout(async () => {
         const listUsers = JSON.parse((await AsyncStorage.getItem('users')) as string);
 
@@ -32,7 +32,7 @@ export const authAPI = {
           const isValidUser = checkUser[0].password === user.password;
 
           if (isValidUser) {
-            return resolve();
+            return resolve(user.username);
           } else {
             return reject('Invalid username or password');
           }

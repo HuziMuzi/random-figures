@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {SingInForm} from './SingInFrom/SingInForm';
 import {SingUpForm} from './SingUpFrom/SingInForm';
-
 import {ScreenLayout} from '../../../layout/ScreenLayout';
 
 export type FormType = {
@@ -10,7 +9,12 @@ export type FormType = {
   password: string;
 };
 
-export const LoginScreen = () => {
+type LoginScreenPropsType = {
+  isAuth: boolean;
+  setIsAuth: (value: boolean) => void;
+};
+
+export const LoginScreen = ({setIsAuth}: LoginScreenPropsType) => {
   const [isLoginForm, setIsLoginForm] = useState(false);
   const [iaFetching, setIsFetching] = useState(false);
 
@@ -22,9 +26,17 @@ export const LoginScreen = () => {
     <ScreenLayout isFetching={iaFetching}>
       <View style={styles.container}>
         {isLoginForm ? (
-          <SingUpForm onPressChangeForm={handlerChangeForm} setIsFetching={setIsFetching} />
+          <SingUpForm
+            onPressChangeForm={handlerChangeForm}
+            setIsFetching={setIsFetching}
+            setIsAuth={setIsAuth}
+          />
         ) : (
-          <SingInForm onPressChangeForm={handlerChangeForm} setIsFetching={setIsFetching} />
+          <SingInForm
+            onPressChangeForm={handlerChangeForm}
+            setIsFetching={setIsFetching}
+            setIsAuth={setIsAuth}
+          />
         )}
       </View>
     </ScreenLayout>

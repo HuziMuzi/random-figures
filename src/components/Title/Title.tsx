@@ -3,11 +3,11 @@ import {StyleSheet, Text} from 'react-native';
 import {Colors} from '../../theme/Colors';
 
 type TitlePropsType = {
-  text: string;
+  children: React.ReactNode;
 };
 
-export const Title = ({text}: TitlePropsType) => {
-  return <Text style={styles.title}>{text}</Text>;
+export const Title = ({children}: TitlePropsType) => {
+  return <Text style={styles.title}>{children}</Text>;
 };
 
 const styles = StyleSheet.create({

@@ -37,7 +37,7 @@ export const SelectLanguage = ({setIsInitializeLanguage}: SelectLanguagePropsTyp
   return (
     <View style={styles().wrapper}>
       <View style={styles().container}>
-        <Title text={t('SelectLanguage')} />
+        <Title>{t('SelectLanguage')}</Title>
         <View style={styles().languagesContainer}>
           {listLanguages.map((el, index) => (
             <TouchableOpacity key={index} onPress={() => changeLanguage(el.value)}>

@@ -6,35 +6,34 @@ import {Title} from '../../../../components/Title/Title';
 import {CustomInputWithLabel} from '../../../../components/CustomInputWithLabel/CustomInputWithLabel';
 import {AppButton} from '../../../../components/AppButton/AppButton';
 import {Colors} from '../../../../theme/Colors';
-import {authAPI} from '../../../../dal/authAPI';
 import {useAppNavigate} from '../../../../hooks/hooks';
+import {register} from '../services/services';
 
 type SingUpFormPropsType = {
-  onPressChangeForm: () => void;
+  setIsAuth: (value: boolean) => void;
   setIsFetching: (value: boolean) => void;
+  onPressChangeForm: () => void;
 };
 
-export const SingUpForm = ({onPressChangeForm, setIsFetching}: SingUpFormPropsType) => {
+export const SingUpForm = ({
+  onPressChangeForm,
+  setIsFetching,
+  setIsAuth,
+}: SingUpFormPropsType) => {
   const {control, handleSubmit, setError, reset} = useForm<FormType>();
   const {navigate} = useAppNavigate();
 
-  const handlerFormSubmit = async (newUser: FormType) => {
-    try {
-      setIsFetching(true);
-      await authAPI.register(newUser);
+  const handlerFormSubmit = async (user: FormType) => {
+    const response = await register({user, setIsFetching, setIsAuth, setError});
+    if (response!) {
       reset();
       navigate('Home');
-    } catch (e) {
-      setError('username', {type: 'custom', message: e as string});
-      console.log(e);
-    } finally {
-      setIsFetching(false);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Title text="Register a new user" />
+      <Title>Register a new user</Title>
       <CustomInputWithLabel
         label="Username"
         control={control}
