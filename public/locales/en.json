@@ -2,5 +2,24 @@
   "changeLanguage": {
     "SelectLanguage": "Select language",
     "button": "continue"
+  },
+  "authorization": {
+    "Log in your account": "Log in to your account",
+    "Register a new user": "Register a new user",
+    "Username": "Username",
+    "Password": "Password"
+  },
+  "buttonText": {
+    "Sing Up": "Sing Up",
+    "Sing In": "Sing In",
+    "Random figure": "Random figure"
+  },
+  "validationFields": {
+    "Required": "The filed is required",
+    "Min length": "Should be minimum of 3 characters"
+  },
+  "serverMessages": {
+    "The user already exists": "The user already exists",
+    "Invalid username or password": "Invalid username or password"
   }
 }

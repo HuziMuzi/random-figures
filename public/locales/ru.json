@@ -2,5 +2,24 @@
   "changeLanguage": {
     "SelectLanguage": "Выберите язык",
     "button": "продолжить"
+  },
+  "authorization": {
+    "Log in your account": "Войдите в учетную запись",
+    "Register a new user": "Регистрация нового пользователя",
+    "Username": "Имя пользователя",
+    "Password": "Пароль"
+  },
+  "buttonText": {
+    "Sing Up": "Регистрация",
+    "Sing In": "Войти",
+    "Random figure": "Случайная фигура"
+  },
+  "validationFields": {
+    "Required": "Обязательно для заполнения",
+    "Min length": "Минимум 3 символов"
+  },
+  "serverMessages": {
+    "The user already exists": "Пользователь уже существует",
+    "Invalid username or password": "Неверное имя пользователя или пароль"
   }
 }

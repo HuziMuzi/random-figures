@@ -1,6 +1,7 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useMemo, useState} from 'react';
 import {View, StyleSheet, ViewStyle} from 'react-native';
 import {AppButton} from '../AppButton/AppButton';
+import {useTranslation} from 'react-i18next';
 
 const SIZE = 130;
 
@@ -40,15 +41,16 @@ const shapes = [
   },
 ];
 
+const getRandomColor = () =>
+  `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+
 type ShapeType = {
   shape: string;
   style: ViewStyle;
 };
 
-const getRandomColor = () =>
-  `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
-
 const RandomShapeGenerator = () => {
+  const {t} = useTranslation('buttonText');
   const [shape, setShape] = useState<ShapeType>(
     shapes[Math.floor(Math.random() * shapes.length)],
   );
@@ -61,14 +63,17 @@ const RandomShapeGenerator = () => {
     setShape(newShape);
   };
 
-  const color = shape.shape === 'triangle' ? 'transparent' : getRandomColor();
+  const color = useMemo(
+    () => (shape.shape === 'triangle' ? 'transparent' : getRandomColor()),
+    [shape.shape],
+  );
 
   return (
     <View>
       <View style={styles.container}>
         <View style={[styles.shape, shape.style, {backgroundColor: color}]} />
       </View>
-      <AppButton title="Generate" onPress={generateShape} />
+      <AppButton title={t('Random figure')} onPress={generateShape} />
     </View>
   );
 };

@@ -14,7 +14,7 @@ type HomeScreenPropsType = {
 };
 
 export const HomeScreen = ({isAuth, setIsAuth}: HomeScreenPropsType) => {
-  const {t, i18n} = useTranslation('changeLanguage');
+  const {i18n} = useTranslation('changeLanguage');
   const {navigate} = useAppNavigate();
   const currentLanguage = i18n.language;
 
@@ -26,6 +26,7 @@ export const HomeScreen = ({isAuth, setIsAuth}: HomeScreenPropsType) => {
 
   const changeLanguage = async (language: string) => {
     await i18n.changeLanguage(language);
+    await AsyncStorage.setItem('i18Lang', language);
   };
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import {authAPI} from '../../../../dal/authAPI';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FormType} from '../LoginScreen';
 import {UseFormSetError} from 'react-hook-form';
+import i18next from 'i18next';
 
 type LoginPropsType = {
   user: FormType;
@@ -18,7 +19,10 @@ export const login = async ({user, setIsFetching, setIsAuth, setError}: LoginPro
     setIsAuth(true);
     return true;
   } catch (e) {
-    setError('root', {type: 'custom', message: e as string});
+    setError('root', {
+      type: 'custom',
+      message: `${i18next.t('Invalid username or password', {ns: 'serverMessages'})}`,
+    });
     return false;
   } finally {
     setIsFetching(false);
@@ -34,7 +38,10 @@ export const register = async ({user, setIsFetching, setIsAuth, setError}: Login
     return true;
   } catch (e) {
     console.log(e);
-    setError('username', {type: 'custom', message: e as string});
+    setError('username', {
+      type: 'custom',
+      message: `${i18next.t('The user already exists', {ns: 'serverMessages'})}`,
+    });
     return false;
   } finally {
     setIsFetching(false);

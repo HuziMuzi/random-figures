@@ -8,6 +8,7 @@ import {AppButton} from '../../../../components/AppButton/AppButton';
 import {Colors} from '../../../../theme/Colors';
 import {useAppNavigate} from '../../../../hooks/hooks';
 import {register} from '../services/services';
+import {useTranslation} from 'react-i18next';
 
 type SingUpFormPropsType = {
   setIsAuth: (value: boolean) => void;
@@ -22,6 +23,7 @@ export const SingUpForm = ({
 }: SingUpFormPropsType) => {
   const {control, handleSubmit, setError, reset} = useForm<FormType>();
   const {navigate} = useAppNavigate();
+  const {t} = useTranslation(['authorization', 'buttonText', 'validationFields']);
 
   const handlerFormSubmit = async (user: FormType) => {
     const response = await register({user, setIsFetching, setIsAuth, setError});
@@ -33,37 +35,40 @@ export const SingUpForm = ({
 
   return (
     <View style={styles.container}>
-      <Title>Register a new user</Title>
+      <Title>{t('Register a new user')}</Title>
       <CustomInputWithLabel
-        label="Username"
+        label={t('Username')}
         control={control}
         name="username"
         rules={{
-          required: 'The filed is required',
+          required: t('Required', {ns: 'validationFields'}),
           minLength: {
             value: 3,
-            message: 'Should be minimum of 3 characters',
+            message: t('Min length', {ns: 'validationFields'}),
           },
         }}
       />
       <CustomInputWithLabel
-        label="Password"
+        label={t('Password')}
         control={control}
         name="password"
         secureTextEntry={true}
         rules={{
-          required: 'The filed is required',
+          required: t('Required', {ns: 'validationFields'}),
           minLength: {
             value: 3,
-            message: 'Should be minimum of 3 characters',
+            message: t('Min length', {ns: 'validationFields'}),
           },
         }}
       />
       <View style={styles.buttonsContainer}>
         <TouchableOpacity onPress={() => onPressChangeForm()} style={styles.button}>
-          <Text style={styles.textButton}>Sing In</Text>
+          <Text style={styles.textButton}>{t('Sing In', {ns: 'buttonText'})}</Text>
         </TouchableOpacity>
-        <AppButton title="Sing Up" onPress={handleSubmit(handlerFormSubmit)} />
+        <AppButton
+          title={t('Sing Up', {ns: 'buttonText'})}
+          onPress={handleSubmit(handlerFormSubmit)}
+        />
       </View>
     </View>
   );
@@ -74,7 +79,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonsContainer: {
-    width: 110,
     alignItems: 'center',
   },
   button: {

@@ -21,7 +21,7 @@ export const Main = () => {
       }
     });
   }, [navigate]);
-  console.log(isAuth);
+
   return (
     <Navigator
       screenOptions={{

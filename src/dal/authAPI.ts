@@ -14,7 +14,7 @@ export const authAPI = {
 
         const checkUser = listUsers.filter((el: FormType) => el.username === newUser.username);
         if (checkUser[0]) {
-          reject('The user already exists');
+          reject();
         } else {
           await AsyncStorage.setItem('users', JSON.stringify([...listUsers, newUser]));
         }
@@ -34,10 +34,10 @@ export const authAPI = {
           if (isValidUser) {
             return resolve(user.username);
           } else {
-            return reject('Invalid username or password');
+            return reject();
           }
         }
-        return reject('Invalid username or password');
+        return reject();
       }, 1000);
     });
   },
