@@ -11,13 +11,12 @@ export const authAPI = {
           await AsyncStorage.setItem('users', JSON.stringify([newUser]));
           return resolve(newUser.username);
         }
-
         const checkUser = listUsers.filter((el: FormType) => el.username === newUser.username);
         if (checkUser[0]) {
-          reject();
-        } else {
-          await AsyncStorage.setItem('users', JSON.stringify([...listUsers, newUser]));
+          return reject();
         }
+
+        await AsyncStorage.setItem('users', JSON.stringify([...listUsers, newUser]));
         return resolve(newUser.username);
       }, 1000);
     });
@@ -26,16 +25,12 @@ export const authAPI = {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         const listUsers = JSON.parse((await AsyncStorage.getItem('users')) as string);
-
+        if (!listUsers) {
+          return reject();
+        }
         const checkUser = listUsers.filter((el: FormType) => el.username === user.username);
-        if (checkUser[0]) {
-          const isValidUser = checkUser[0].password === user.password;
-
-          if (isValidUser) {
-            return resolve(user.username);
-          } else {
-            return reject();
-          }
+        if (checkUser[0].password === user.password) {
+          return resolve(user.username);
         }
         return reject();
       }, 1000);

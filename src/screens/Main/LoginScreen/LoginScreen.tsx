@@ -9,34 +9,19 @@ export type FormType = {
   password: string;
 };
 
-type LoginScreenPropsType = {
-  isAuth: boolean;
-  setIsAuth: (value: boolean) => void;
-};
-
-export const LoginScreen = ({setIsAuth}: LoginScreenPropsType) => {
+export const LoginScreen = () => {
   const [isLoginForm, setIsLoginForm] = useState(false);
   const [iaFetching, setIsFetching] = useState(false);
 
-  const handlerChangeForm = () => {
-    setIsLoginForm(!isLoginForm);
-  };
+  const handlerChangeForm = () => setIsLoginForm(!isLoginForm);
 
   return (
     <ScreenLayout isFetching={iaFetching}>
       <View style={styles.container}>
         {isLoginForm ? (
-          <SingUpForm
-            onPressChangeForm={handlerChangeForm}
-            setIsFetching={setIsFetching}
-            setIsAuth={setIsAuth}
-          />
+          <SingUpForm onPressChangeForm={handlerChangeForm} setIsFetching={setIsFetching} />
         ) : (
-          <SingInForm
-            onPressChangeForm={handlerChangeForm}
-            setIsFetching={setIsFetching}
-            setIsAuth={setIsAuth}
-          />
+          <SingInForm onPressChangeForm={handlerChangeForm} setIsFetching={setIsFetching} />
         )}
       </View>
     </ScreenLayout>

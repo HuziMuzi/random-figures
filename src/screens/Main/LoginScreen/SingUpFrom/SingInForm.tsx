@@ -9,24 +9,21 @@ import {Colors} from '../../../../theme/Colors';
 import {useAppNavigate} from '../../../../hooks/hooks';
 import {register} from '../services/services';
 import {useTranslation} from 'react-i18next';
+import {useAuth} from '../../../../components/AuthProvider/hooks';
 
 type SingUpFormPropsType = {
-  setIsAuth: (value: boolean) => void;
   setIsFetching: (value: boolean) => void;
   onPressChangeForm: () => void;
 };
 
-export const SingUpForm = ({
-  onPressChangeForm,
-  setIsFetching,
-  setIsAuth,
-}: SingUpFormPropsType) => {
+export const SingUpForm = ({onPressChangeForm, setIsFetching}: SingUpFormPropsType) => {
   const {control, handleSubmit, setError, reset} = useForm<FormType>();
   const {navigate} = useAppNavigate();
+  const {authorize} = useAuth();
   const {t} = useTranslation(['authorization', 'buttonText', 'validationFields']);
 
   const handlerFormSubmit = async (user: FormType) => {
-    const response = await register({user, setIsFetching, setIsAuth, setError});
+    const response = await register({user, setIsFetching, authorize, setError});
     if (response!) {
       reset();
       navigate('Home');

@@ -9,7 +9,7 @@ const languageDetector = {
   async: true,
   detect: async callback => {
     const savedDataJSON = await AsyncStorage.getItem('i18Lang');
-    const lng = savedDataJSON ? savedDataJSON : 'en';
+    const lng = savedDataJSON || 'en';
     callback(lng);
   },
 };

@@ -7,21 +7,17 @@ import RandomShapeGenerator from '../../../components/RandomFiguresGenerator/Ran
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAppNavigate} from '../../../hooks/hooks';
 import {useTranslation} from 'react-i18next';
+import {useAuth} from '../../../components/AuthProvider/hooks';
 
-type HomeScreenPropsType = {
-  isAuth: boolean;
-  setIsAuth: (value: boolean) => void;
-};
-
-export const HomeScreen = ({isAuth, setIsAuth}: HomeScreenPropsType) => {
+export const HomeScreen = () => {
   const {i18n} = useTranslation('changeLanguage');
   const {navigate} = useAppNavigate();
+  const {isAuth, logout} = useAuth();
+
   const currentLanguage = i18n.language;
 
   const handlerLogout = async () => {
-    await AsyncStorage.removeItem('username').then(() => {
-      setIsAuth(false);
-    });
+    await AsyncStorage.removeItem('username').then(() => logout());
   };
 
   const changeLanguage = async (language: string) => {

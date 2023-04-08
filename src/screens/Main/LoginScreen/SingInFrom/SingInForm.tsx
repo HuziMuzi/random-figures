@@ -9,18 +9,14 @@ import {Colors} from '../../../../theme/Colors';
 import {useAppNavigate} from '../../../../hooks/hooks';
 import {login} from '../services/services';
 import {useTranslation} from 'react-i18next';
+import {useAuth} from '../../../../components/AuthProvider/hooks';
 
 type SingInFormPropsType = {
-  setIsAuth: (value: boolean) => void;
   setIsFetching: (value: boolean) => void;
   onPressChangeForm: () => void;
 };
 
-export const SingInForm = ({
-  setIsAuth,
-  setIsFetching,
-  onPressChangeForm,
-}: SingInFormPropsType) => {
+export const SingInForm = ({setIsFetching, onPressChangeForm}: SingInFormPropsType) => {
   const {
     control,
     handleSubmit,
@@ -29,10 +25,16 @@ export const SingInForm = ({
     formState: {errors},
   } = useForm<FormType>();
   const {navigate} = useAppNavigate();
+  const {authorize} = useAuth();
   const {t} = useTranslation(['authorization', 'buttonText', 'validationFields']);
 
   const handlerFormSubmit = async (user: FormType) => {
-    const response = await login({user, setError, setIsAuth, setIsFetching});
+    const response = await login({
+      user,
+      setError,
+      authorize,
+      setIsFetching,
+    });
     if (response!) {
       reset();
       navigate('Home');
