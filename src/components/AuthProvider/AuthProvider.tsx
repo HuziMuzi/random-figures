@@ -11,9 +11,10 @@ export const AuthProvider = ({children}: AuthProviderPropsType) => {
 
   const authorize = useCallback(() => setIsAuth(true), []);
   const logout = () => setIsAuth(false);
-  const changeStatusFetching = useCallback((value: boolean) => setIsFetching(value), []);
+  const startFetching = () => setIsFetching(true);
+  const stopFetching = () => setIsFetching(false);
 
-  const value = {isAuth, authorize, logout, isFetching, changeStatusFetching};
+  const value = {isAuth, authorize, logout, isFetching, startFetching, stopFetching};
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

@@ -22,7 +22,7 @@ export const SingInForm = ({onPressChangeForm}: SingInFormPropsType) => {
     formState: {errors},
   } = useForm<FormType>();
   const {t} = useTranslation(['authorization', 'buttonText', 'validationFields']);
-  const {authorize, changeStatusFetching} = useAuth();
+  const {authorize, stopFetching, startFetching} = useAuth();
 
   const handlerFormSubmit = async (user: FormType) => {
     // await AsyncStorage.clear();
@@ -30,7 +30,8 @@ export const SingInForm = ({onPressChangeForm}: SingInFormPropsType) => {
       user,
       setError,
       authorize,
-      changeStatusFetching,
+      stopFetching,
+      startFetching,
     });
   };
 

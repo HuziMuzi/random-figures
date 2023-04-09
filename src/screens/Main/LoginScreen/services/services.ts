@@ -8,22 +8,25 @@ type LoginPropsType = {
   user: FormType;
   setError: UseFormSetError<FormType>;
   authorize: () => void;
-  changeStatusFetching: (value: boolean) => void;
+  startFetching: () => void;
+  stopFetching: () => void;
 };
 
 type AuthMePropsType = {
   authorize: () => void;
-  changeStatusFetching: (value: boolean) => void;
+  startFetching: () => void;
+  stopFetching: () => void;
 };
 
 export const login = async ({
   user,
-  changeStatusFetching,
+  stopFetching,
+  startFetching,
   authorize,
   setError,
 }: LoginPropsType) => {
+  startFetching();
   try {
-    changeStatusFetching(true);
     const username = await authAPI.login(user);
     await AsyncStorage.setItem('username', username as string);
     authorize();
@@ -35,18 +38,19 @@ export const login = async ({
     });
     return false;
   } finally {
-    changeStatusFetching(false);
+    stopFetching();
   }
 };
 
 export const register = async ({
   user,
-  changeStatusFetching,
+  stopFetching,
+  startFetching,
   authorize,
   setError,
 }: LoginPropsType) => {
+  startFetching();
   try {
-    changeStatusFetching(true);
     const username = await authAPI.register(user);
     await AsyncStorage.setItem('username', username as string);
     authorize();
@@ -58,12 +62,12 @@ export const register = async ({
     });
     return false;
   } finally {
-    changeStatusFetching(false);
+    stopFetching();
   }
 };
 
-export const authMe = async ({authorize, changeStatusFetching}: AuthMePropsType) => {
-  changeStatusFetching(true);
+export const authMe = async ({authorize, startFetching, stopFetching}: AuthMePropsType) => {
+  startFetching();
   try {
     const username = await authAPI.authMe();
     if (username) {
@@ -71,6 +75,6 @@ export const authMe = async ({authorize, changeStatusFetching}: AuthMePropsType)
     }
   } catch (e) {
   } finally {
-    changeStatusFetching(false);
+    stopFetching();
   }
 };

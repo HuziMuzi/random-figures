@@ -7,14 +7,14 @@ import {useAuth} from './src/components/AuthProvider/hooks';
 import {SplashScreen} from './src/layout/SplashScreen';
 
 const AppEntry = () => {
-  const {authorize, changeStatusFetching} = useAuth();
+  const {authorize, stopFetching, startFetching} = useAuth();
   const [initializeApp, setInitializeApp] = useState(true);
 
   useEffect(() => {
-    authMe({authorize, changeStatusFetching}).then(() => {
+    authMe({authorize, stopFetching, startFetching}).then(() => {
       setInitializeApp(false);
     });
-  }, [authorize, changeStatusFetching]);
+  }, [authorize]);
 
   if (initializeApp) {
     return <SplashScreen />;

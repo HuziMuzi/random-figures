@@ -5,7 +5,9 @@ export type ContextType = {
   isFetching: boolean;
   logout: () => void;
   authorize: () => void;
-  changeStatusFetching: (value: boolean) => void;
+  // changeStatusFetching: (value: boolean) => void;
+  startFetching: () => void;
+  stopFetching: () => void;
 };
 
 const Context = React.createContext<ContextType>({} as ContextType);

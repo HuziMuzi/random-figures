@@ -18,11 +18,11 @@ type SingUpFormPropsType = {
 export const SingUpForm = ({onPressChangeForm}: SingUpFormPropsType) => {
   const {control, handleSubmit, setError, reset} = useForm<FormType>();
   const {navigate} = useAppNavigate();
-  const {authorize, changeStatusFetching} = useAuth();
+  const {authorize, stopFetching, startFetching} = useAuth();
   const {t} = useTranslation(['authorization', 'buttonText', 'validationFields']);
 
   const handlerFormSubmit = async (user: FormType) => {
-    const response = await register({user, changeStatusFetching, authorize, setError});
+    const response = await register({user, startFetching, stopFetching, authorize, setError});
     if (response!) {
       reset();
       navigate('Home');
