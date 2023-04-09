@@ -12,18 +12,17 @@ import {useTranslation} from 'react-i18next';
 import {useAuth} from '../../../../components/AuthProvider/hooks';
 
 type SingUpFormPropsType = {
-  setIsFetching: (value: boolean) => void;
   onPressChangeForm: () => void;
 };
 
-export const SingUpForm = ({onPressChangeForm, setIsFetching}: SingUpFormPropsType) => {
+export const SingUpForm = ({onPressChangeForm}: SingUpFormPropsType) => {
   const {control, handleSubmit, setError, reset} = useForm<FormType>();
   const {navigate} = useAppNavigate();
-  const {authorize} = useAuth();
+  const {authorize, changeStatusFetching} = useAuth();
   const {t} = useTranslation(['authorization', 'buttonText', 'validationFields']);
 
   const handlerFormSubmit = async (user: FormType) => {
-    const response = await register({user, setIsFetching, authorize, setError});
+    const response = await register({user, changeStatusFetching, authorize, setError});
     if (response!) {
       reset();
       navigate('Home');

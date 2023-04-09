@@ -1,27 +1,16 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {LoginScreen} from './LoginScreen/LoginScreen';
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../theme/Colors';
 import {HomeScreen} from './HomeScreen/HomeScreen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useAppNavigate} from '../../hooks/hooks';
 import {useAuth} from '../../components/AuthProvider/hooks';
+import {SelectLanguage} from './SelectLanguage/SelectLanguageScreen';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
 export const Main = () => {
-  const {authorize} = useAuth();
-  const {navigate} = useAppNavigate();
-
-  useEffect(() => {
-    AsyncStorage.getItem('username').then(username => {
-      if (username) {
-        authorize();
-        navigate('Home');
-      }
-    });
-  }, [authorize, navigate]);
+  const {isAuth} = useAuth();
 
   return (
     <Navigator
@@ -29,8 +18,16 @@ export const Main = () => {
         headerStyle: styles.headerStyle,
         headerTitleStyle: styles.headerTitleStyle,
       }}>
-      <Screen options={{headerShown: false}} name="Login" children={() => <LoginScreen />} />
-      <Screen options={{headerShown: false}} name="Home" children={() => <HomeScreen />} />
+      {isAuth ? (
+        <Screen options={{headerShown: false}} name="Home" children={() => <HomeScreen />} />
+      ) : (
+        <Screen options={{headerShown: false}} name="Login" children={() => <LoginScreen />} />
+      )}
+      <Screen
+        options={{headerShown: false, animation: 'none'}}
+        name="SelectLanguage"
+        component={SelectLanguage}
+      />
     </Navigator>
   );
 };

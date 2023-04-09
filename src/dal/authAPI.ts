@@ -29,10 +29,19 @@ export const authAPI = {
           return reject();
         }
         const checkUser = listUsers.filter((el: FormType) => el.username === user.username);
-        if (checkUser[0].password === user.password) {
+        console.log(checkUser);
+        if (checkUser[0] && checkUser[0].password === user.password) {
           return resolve(user.username);
         }
         return reject();
+      }, 1000);
+    });
+  },
+  authMe() {
+    return new Promise(resolve => {
+      setTimeout(async () => {
+        const username = AsyncStorage.getItem('username');
+        return resolve(username);
       }, 1000);
     });
   },

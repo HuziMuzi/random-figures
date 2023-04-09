@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import Context from './context';
 
 type AuthProviderPropsType = {
@@ -7,10 +7,13 @@ type AuthProviderPropsType = {
 
 export const AuthProvider = ({children}: AuthProviderPropsType) => {
   const [isAuth, setIsAuth] = useState(false);
-  const authorize = () => setIsAuth(true);
-  const logout = () => setIsAuth(false);
+  const [isFetching, setIsFetching] = useState(true);
 
-  const value = {isAuth, authorize, logout};
+  const authorize = useCallback(() => setIsAuth(true), []);
+  const logout = () => setIsAuth(false);
+  const changeStatusFetching = useCallback((value: boolean) => setIsFetching(value), []);
+
+  const value = {isAuth, authorize, logout, isFetching, changeStatusFetching};
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

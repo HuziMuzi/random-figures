@@ -6,39 +6,32 @@ import {Title} from '../../../../components/Title/Title';
 import {CustomInputWithLabel} from '../../../../components/CustomInputWithLabel/CustomInputWithLabel';
 import {AppButton} from '../../../../components/AppButton/AppButton';
 import {Colors} from '../../../../theme/Colors';
-import {useAppNavigate} from '../../../../hooks/hooks';
 import {login} from '../services/services';
 import {useTranslation} from 'react-i18next';
 import {useAuth} from '../../../../components/AuthProvider/hooks';
 
 type SingInFormPropsType = {
-  setIsFetching: (value: boolean) => void;
   onPressChangeForm: () => void;
 };
 
-export const SingInForm = ({setIsFetching, onPressChangeForm}: SingInFormPropsType) => {
+export const SingInForm = ({onPressChangeForm}: SingInFormPropsType) => {
   const {
     control,
     handleSubmit,
     setError,
-    reset,
     formState: {errors},
   } = useForm<FormType>();
-  const {navigate} = useAppNavigate();
-  const {authorize} = useAuth();
   const {t} = useTranslation(['authorization', 'buttonText', 'validationFields']);
+  const {authorize, changeStatusFetching} = useAuth();
 
   const handlerFormSubmit = async (user: FormType) => {
-    const response = await login({
+    // await AsyncStorage.clear();
+    await login({
       user,
       setError,
       authorize,
-      setIsFetching,
+      changeStatusFetching,
     });
-    if (response!) {
-      reset();
-      navigate('Home');
-    }
   };
 
   return (

@@ -1,10 +1,11 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, ViewStyle} from 'react-native';
-import {AppButton} from '../AppButton/AppButton';
 import {useTranslation} from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Colors} from '../../theme/Colors';
-import {Title} from '../Title/Title';
+import {AppButton} from '../../../components/AppButton/AppButton';
+import {Title} from '../../../components/Title/Title';
+import {Colors} from '../../../theme/Colors';
+import {useAppNavigate} from '../../../hooks/hooks';
 
 const listLanguages = [
   {
@@ -17,12 +18,10 @@ const listLanguages = [
   },
 ];
 
-type SelectLanguagePropsType = {
-  setIsInitializeLanguage: (value: boolean) => void;
-};
-
-export const SelectLanguage = ({setIsInitializeLanguage}: SelectLanguagePropsType) => {
+export const SelectLanguage = () => {
   const {t, i18n} = useTranslation('changeLanguage');
+  const {navigate} = useAppNavigate();
+
   const currentLanguage = i18n.language;
   const changeLanguage = async (language: string) => {
     await i18n.changeLanguage(language);
@@ -30,8 +29,7 @@ export const SelectLanguage = ({setIsInitializeLanguage}: SelectLanguagePropsTyp
 
   const handlerContinueButton = async () => {
     await AsyncStorage.setItem('i18Lang', currentLanguage);
-    setIsInitializeLanguage(true);
-    // await AsyncStorage.removeItem('i18Lang');
+    navigate('Login');
   };
 
   return (

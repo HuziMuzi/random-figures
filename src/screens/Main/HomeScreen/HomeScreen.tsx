@@ -1,18 +1,16 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {ScreenLayout} from '../../../layout/ScreenLayout';
 import {SvgLogout} from '../../../assets/SvgLogout';
 import {RoundButton} from '../../../components/RoundButton/RoundButton';
 import RandomShapeGenerator from '../../../components/RandomFiguresGenerator/RandomFiguresGenerator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useAppNavigate} from '../../../hooks/hooks';
 import {useTranslation} from 'react-i18next';
 import {useAuth} from '../../../components/AuthProvider/hooks';
 
 export const HomeScreen = () => {
   const {i18n} = useTranslation('changeLanguage');
-  const {navigate} = useAppNavigate();
-  const {isAuth, logout} = useAuth();
+  const {logout} = useAuth();
 
   const currentLanguage = i18n.language;
 
@@ -24,10 +22,6 @@ export const HomeScreen = () => {
     await i18n.changeLanguage(language);
     await AsyncStorage.setItem('i18Lang', language);
   };
-
-  useEffect(() => {
-    !isAuth && navigate('Login');
-  }, [isAuth, navigate]);
 
   return (
     <ScreenLayout>
