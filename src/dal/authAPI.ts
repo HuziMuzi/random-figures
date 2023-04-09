@@ -29,7 +29,6 @@ export const authAPI = {
           return reject();
         }
         const checkUser = listUsers.filter((el: FormType) => el.username === user.username);
-        console.log(checkUser);
         if (checkUser[0] && checkUser[0].password === user.password) {
           return resolve(user.username);
         }

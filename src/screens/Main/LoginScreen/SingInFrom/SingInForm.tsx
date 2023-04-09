@@ -25,7 +25,6 @@ export const SingInForm = ({onPressChangeForm}: SingInFormPropsType) => {
   const {authorize, stopFetching, startFetching} = useAuth();
 
   const handlerFormSubmit = async (user: FormType) => {
-    // await AsyncStorage.clear();
     await login({
       user,
       setError,
